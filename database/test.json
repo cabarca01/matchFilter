@@ -1,0 +1,14 @@
+{
+  "node1": [
+    {
+      "subnode1": {
+        "property": "value1"
+      }
+    },
+    {
+      "subnode2": {
+        "property": "value2"
+      }
+    }
+  ]
+}

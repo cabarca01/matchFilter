@@ -1,0 +1,29 @@
+{
+  "development": {
+    "PORT": 3000,
+    "MIN_DIST_RANGE_KM": 30,
+    "MAX_DIST_RANGE_KM": 300,
+    "MIN_AGE_RANGE": 18,
+    "MAX_AGE_RANGE": 95,
+    "MIN_HEIGHT": 135,
+    "MAX_HEIGHT": 210
+  },
+  "production": {
+    "PORT": 3000,
+    "MIN_DIST_RANGE_KM": 30,
+    "MAX_DIST_RANGE_KM": 300,
+    "MIN_AGE_RANGE": 18,
+    "MAX_AGE_RANGE": 95,
+    "MIN_HEIGHT": 135,
+    "MAX_HEIGHT": 210
+  },
+  "test": {
+    "PORT": 5000,
+    "MIN_DIST_RANGE_KM": 0,
+    "MAX_DIST_RANGE_KM": 100,
+    "MIN_AGE_RANGE": 18,
+    "MAX_AGE_RANGE": 95,
+    "MIN_HEIGHT": 135,
+    "MAX_HEIGHT": 210
+  }
+}

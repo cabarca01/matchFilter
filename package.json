@@ -1,0 +1,31 @@
+{
+  "name": "filtering-matches",
+  "version": "1.0.0",
+  "description": "Coding exercise for Spark Networks",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server/server.js"
+  },
+  "jest": {
+    "verbose": true
+  },
+  "author": "Carlos Augusto Abarca Bayona",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "bootstrap": "^4.1.1",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "handlebars-helpers": "^0.10.0",
+    "haversine": "^1.1.0",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.10",
+    "popper.js": "^1.14.3"
+  },
+  "devDependencies": {
+    "jest": "^22.4.3",
+    "rewire": "^4.0.1",
+    "supertest": "^3.0.0"
+  }
+}

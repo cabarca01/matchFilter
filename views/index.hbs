@@ -1,0 +1,196 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-light text-white">
+    <span class="ml-auto">
+        <b>Welcome,</b> {{loggedUser.display_name}}
+    </span>
+</nav>
+<div class="jumbotron jumbotron-fluid bg-info">
+    <div class="container  text-white">
+        <h1>Your Perfect Match</h1>
+        <p>It's time to find that special someone in you life...</p>
+    </div>
+</div>
+
+<div class="row">
+    <div id="matches" class="col-8">
+        <div class="container-fluid text-center">
+            The following are your perfect matches:
+        </div>
+        <div id="matchResults"></div>
+    </div>
+
+    <div id="blankspace" class="col-1">&nbsp;</div>
+
+    <div id="filter" class="col-3">
+        <h3 class="text-center bg-light">Filter your Results</h3>
+        <div class="form-group">
+            <div class="form-check">
+                <label for="hasPhoto" class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="hasPhoto">Only Matches with Photo
+                </label>
+            </div>
+
+            <div class="form-check">
+                <label for="inContact" class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="inContact">Only Matches in contact
+                </label>
+            </div>
+
+            <div class="form-check">
+                <label for="isFavourite" class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="isFavourite">Only Favourites
+                </label>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="compScore">Compatibility Score: </label> <br/>
+                <input type="text"
+                       name="comScore"
+                       id="comScore"
+                       data-provide="slider"
+                       data-slider-min="1"
+                       data-slider-max="99"
+                       data-slider-step="1"
+                       data-slider-value="[1, 99]"
+                       data-slider-range="true"
+                       data-slider-tooltip="show"
+                       data-slider-tooltip-position="bottom"
+                       data-slider-tooltip-split="true"
+                       data-slider-ticks="[1, 99]"
+                       data-slider-ticks-labels='["1%", "99%"]'/>
+                <br/>
+                <label for="age">Age: </label> <br/>
+                <input type="text"
+                       name="age"
+                       id="age"
+                       data-provide="slider"
+                       data-slider-min="{{filterLimits.min_age_limit}}"
+                       data-slider-max="{{filterLimits.max_age_limit}}"
+                       data-slider-step="1"
+                       data-slider-value="[{{filterLimits.min_age_limit}}, {{filterLimits.max_age_limit}}]"
+                       data-slider-range="true"
+                       data-slider-tooltip="show"
+                       data-slider-tooltip-position="bottom"
+                       data-slider-tooltip-split="true"
+                       data-slider-ticks="[{{filterLimits.min_age_limit}}, {{filterLimits.max_age_limit}}]"
+                       data-slider-ticks-labels='["{{filterLimits.min_age_limit}}", ">{{filterLimits.max_age_limit}}"]'/>
+                <br/>
+                <label for="height">Height: </label> <br/>
+                <input type="text"
+                       name="height"
+                       id="height"
+                       data-provide="slider"
+                       data-slider-min="{{filterLimits.min_height_limit}}"
+                       data-slider-max="{{filterLimits.max_height_limit}}"
+                       data-slider-step="1"
+                       data-slider-value="[{{filterLimits.min_height_limit}}, {{filterLimits.max_height_limit}}]"
+                       data-slider-range="true"
+                       data-slider-tooltip="show"
+                       data-slider-tooltip-position="bottom"
+                       data-slider-tooltip-split="true"
+                       data-slider-ticks="[{{filterLimits.min_height_limit}}, {{filterLimits.max_height_limit}}]"
+                       data-slider-ticks-labels='["{{filterLimits.min_height_limit}}", ">{{filterLimits.max_height_limit}}"]'/>
+
+                <br/>
+                <label for="distance">Distance in Km: </label> <br/>
+                <input type="text"
+                       name="distance"
+                       id="distance"
+                       data-provide="slider"
+                       data-slider-min="{{filterLimits.min_distance_limit}}"
+                       data-slider-max="{{filterLimits.max_distance_limit}}"
+                       data-slider-step="1"
+                       data-slider-value="{{filterLimits.min_distance_limit}}"
+                       data-slider-tooltip="show"
+                       data-slider-tooltip-position="bottom"
+                       data-slider-ticks="[{{filterLimits.min_distance_limit}}, {{filterLimits.max_distance_limit}}]"
+                       data-slider-ticks-labels='["< {{filterLimits.min_distance_limit}} Km", "> {{filterLimits.max_distance_limit}} Km"]'/>
+                <input type="hidden" id="loggedUserLatitude" name="loggedUserLatitude" value="{{loggedUser.city.latitude}}">
+                <input type="hidden" id="loggedUserLongitude" name="loggedUserLongitude" value="{{loggedUser.city.longitude}}">
+            </div>
+            <br/>
+            <button type="button" class="btn btn-success btn-lg btn-block" onclick="getFilteredMatches();">Apply Filter</button>
+        </div>
+    </div>
+
+
+    </div>
+</div>
+
+<script type='application/javascript' src="js/bootstrap-slider.js"></script>
+
+<script type="text/x-handlebars-template" id="match-list-template">
+    {{{{raw}}}}
+    {{#matchList}}
+        <div class="media border p-3">
+            {{#photo}}
+            <img src="{{photo}}" class="rounded mr-3" style="height: auto; width: 40%; display=block" alt="Match Photo"/>
+            {{/photo}}
+            {{^photo}}
+            <img src="images/no_image.jpeg" class="rounded mr-3" style="height: auto; width: 40%; display=block" alt="Match Photo"/>
+            {{/photo}}
+            <div class="media-body">
+                <h5 class="mt-0">{{display_name}}</h5>
+                <table class="table table-borderless table-sm">
+                    <tbody>
+                    <tr>
+                        <th scope="row" width="40%" nowrap="true">City:</th>
+                        <td>{{city.name}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="40%" nowrap="true">Age:</th>
+                        <td>{{age}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="40%" nowrap="true">Height in cm:</th>
+                        <td>{{height_in_cm}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="40%" nowrap="true">Job Title:</th>
+                        <td>{{job_title}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="40%" nowrap="true">Religion:</th>
+                        <td>{{religion}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="40%" nowrap="true">Compatibility Score:</th>
+                        <td>{{compatibilityScore}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="40%" nowrap="true">Contacts Exchanged:</th>
+                        <td>{{contactsExchanged}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="40%">Favourite:</th>
+                        {{#favourite}}
+                        <td>Yes</td>
+                        {{/favourite}}
+                        {{^favourite}}
+                        <td>No</td>
+                        {{/favourite}}
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <p>&nbsp;</p>
+    {{/matchList}}
+    {{{{/raw}}}}
+</script>
+
+<script type="text/template" id="errordiv">
+    <div class="jumbotron jumbotron-fluid bg-warning">
+        <div class="container  text-white">
+            <h1>Oops...</h1>
+            <p>Something went wrong while processing your request.</p>
+        </div>
+    </div>
+</script>
+
+<script type="application/javascript">
+    $(document).ready(function() {
+        getFilteredMatches();
+    });
+</script>
+
+<script type="application/javascript" src="js/matches.js"></script>
